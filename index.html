@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Anna Anisimova — сайты и Telegram-приложения</title>
+<meta name="description" content="Делаю сайты, лендинги и мини-приложения в Telegram для кафе, вилл, студий и брендов. Бали / удалённо.">
+<meta property="og:title" content="Anna Anisimova — websites & Telegram mini apps">
+<meta property="og:description" content="Сайты, лендинги и мини-приложения в Telegram. Bali / remote.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌿</text></svg>">
+<style>
+:root{
+  --bg:#f6f2ec; --surface:#fffdf9; --text:#1d1b18; --muted:#6f685f;
+  --line:#e6ded2; --accent:#2f5d50; --accent-soft:#e3ece7; --warm:#c8794a;
+  --radius:22px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.55;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+.wrap{max-width:1080px;margin:0 auto;padding:0 22px}
+header{position:sticky;top:0;z-index:10;background:rgba(246,242,236,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:62px}
+.logo{font-weight:700;letter-spacing:-.02em;text-decoration:none}
+.logo span{color:var(--accent)}
+.nav-r{display:flex;gap:18px;align-items:center;font-size:15px}
+.nav-r a{text-decoration:none;color:var(--muted)}
+.nav-r a:hover{color:var(--text)}
+.lang{display:flex;border:1px solid var(--line);border-radius:99px;overflow:hidden}
+.lang button{border:0;background:none;padding:6px 11px;font:inherit;font-size:13px;cursor:pointer;color:var(--muted)}
+.lang button.on{background:var(--text);color:var(--bg)}
+@media(max-width:640px){.nav-r .hide-m{display:none}}
+
+.hero{padding:88px 0 64px}
+.tag{display:inline-block;font-size:13px;padding:6px 12px;border-radius:99px;background:var(--accent-soft);color:var(--accent);margin-bottom:22px}
+h1{font-size:clamp(36px,6.4vw,68px);line-height:1.04;letter-spacing:-.035em;font-weight:700;max-width:860px}
+h1 em{font-style:normal;color:var(--accent)}
+.lead{font-size:clamp(17px,2vw,20px);color:var(--muted);max-width:620px;margin:22px 0 34px}
+.btns{display:flex;gap:12px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:14px 22px;border-radius:99px;text-decoration:none;font-weight:600;font-size:15px;transition:transform .15s}
+.btn:hover{transform:translateY(-2px)}
+.btn-main{background:var(--text);color:var(--bg)}
+.btn-ghost{border:1px solid var(--line);background:var(--surface)}
+
+section{padding:64px 0}
+h2{font-size:clamp(28px,4vw,40px);letter-spacing:-.03em;line-height:1.1;margin-bottom:10px}
+.sub{color:var(--muted);margin-bottom:36px;max-width:560px}
+
+.works{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column;transition:transform .2s,box-shadow .2s}
+.card:hover{transform:translateY(-4px);box-shadow:0 18px 40px rgba(40,30,20,.08)}
+.prev{aspect-ratio:16/10;position:relative;overflow:hidden;background:#eee}
+.prev iframe{position:absolute;top:0;left:0;width:400%;height:400%;transform:scale(.25);transform-origin:0 0;border:0;pointer-events:none}
+.prev.game{background:linear-gradient(160deg,#7fd3c4,#3c8f7c 60%,#2f5d50);display:flex;align-items:center;justify-content:center;font-size:84px}
+.body{padding:22px;display:flex;flex-direction:column;gap:10px;flex:1}
+.kind{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--warm);font-weight:600}
+.card h3{font-size:22px;letter-spacing:-.02em}
+.card p{color:var(--muted);font-size:15px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px}
+.chips span{font-size:12px;padding:4px 10px;border-radius:99px;background:var(--bg);border:1px solid var(--line)}
+.links{display:flex;gap:16px;margin-top:auto;padding-top:12px;font-weight:600;font-size:15px}
+.links a{text-decoration:none;color:var(--accent)}
+.links a:hover{text-decoration:underline}
+
+.svc{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+.s{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:24px}
+.s .ic{font-size:28px;margin-bottom:12px}
+.s h3{font-size:19px;margin-bottom:6px;letter-spacing:-.01em}
+.s p{color:var(--muted);font-size:15px;margin-bottom:14px}
+.price{font-weight:700;font-size:17px}
+.price small{font-weight:400;color:var(--muted);font-size:13px}
+
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;counter-reset:st}
+.step{padding:22px;border-top:2px solid var(--text)}
+.step::before{counter-increment:st;content:"0" counter(st);font-size:13px;color:var(--muted);display:block;margin-bottom:8px}
+.step h3{font-size:18px;margin-bottom:6px}
+.step p{color:var(--muted);font-size:15px}
+
+.cta{background:var(--accent);color:#f4f1ea;border-radius:32px;padding:56px 36px;text-align:center}
+.cta h2{color:#fff}
+.cta p{opacity:.85;max-width:520px;margin:12px auto 28px}
+.cta .btn-main{background:#fff;color:var(--accent)}
+footer{padding:36px 0 48px;color:var(--muted);font-size:14px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+[data-en]{}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a href="#" class="logo">Anna <span>Anisimova</span></a>
+    <div class="nav-r">
+      <a href="#works" class="hide-m" data-i="nav1">Работы</a>
+      <a href="#services" class="hide-m" data-i="nav2">Услуги</a>
+      <a href="#contact" class="hide-m" data-i="nav3">Контакты</a>
+      <div class="lang"><button data-l="ru" class="on">RU</button><button data-l="en">EN</button></div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <div class="tag" data-i="tag">🌴 Бали · удалённо по всему миру</div>
+    <h1 data-i="h1" data-html>Сайты и <em>Telegram-приложения</em>, которые приводят клиентов</h1>
+    <p class="lead" data-i="lead">Делаю лендинги, сайты и мини-приложения в Telegram для кафе, вилл, студий и брендов. Быстро, красиво, с заботой о деталях.</p>
+    <div class="btns">
+      <a class="btn btn-main" href="https://t.me/aanisimo_va" target="_blank" rel="noopener" data-i="cta1">Написать в Telegram →</a>
+      <a class="btn btn-ghost" href="#works" data-i="cta2">Смотреть работы</a>
+    </div>
+  </section>
+
+  <section id="works">
+    <h2 data-i="w_h">Работы</h2>
+    <p class="sub" data-i="w_sub">Живые демо — их можно открыть и потрогать.</p>
+    <div class="works">
+
+      <article class="card">
+        <div class="prev game">🐦</div>
+        <div class="body">
+          <div class="kind" data-i="k_game">Telegram Mini App · игра</div>
+          <h3 data-i="t_kol">Колибри — Flappy</h3>
+          <p data-i="d_kol">Мини-игра прямо внутри Telegram: управление тапом, общий рейтинг игроков, свой бэкенд и бот. Такую игру можно брендировать под кафе или магазин — с призами за рекорды.</p>
+          <div class="chips"><span>Telegram Bot</span><span>Mini App</span><span>HTML5 Canvas</span><span data-i="c_rating">Рейтинг</span></div>
+          <div class="links">
+            <a href="https://t.me/kolibri_gamebot" target="_blank" rel="noopener" data-i="l_tg">Открыть в Telegram →</a>
+            <a href="https://186-246-49-174.sslip.io/" target="_blank" rel="noopener" data-i="l_web">В браузере</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="prev"><iframe src="puls/" loading="lazy" title="Пульс" tabindex="-1"></iframe></div>
+        <div class="body">
+          <div class="kind" data-i="k_land">Лендинг · SaaS</div>
+          <h3 data-i="t_puls">Пульс — SMM-платформа</h3>
+          <p data-i="d_puls">Продающий лендинг для сервиса SMM-команд: оффер, тарифы, FAQ, светлая и тёмная тема, адаптив под телефон.</p>
+          <div class="chips"><span data-i="c_adapt">Адаптив</span><span data-i="c_theme">Тёмная тема</span><span data-i="c_tariffs">Тарифы</span></div>
+          <div class="links"><a href="puls/" target="_blank" data-i="l_open">Открыть сайт →</a></div>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <section id="services">
+    <h2 data-i="s_h">Услуги и цены</h2>
+    <p class="sub" data-i="s_sub">Цены ориентировочные — точную назову после короткого созвона или переписки.</p>
+    <div class="svc">
+      <div class="s"><div class="ic">✨</div><h3 data-i="s1">Лендинг</h3><p data-i="s1d">Одна страница под услугу, акцию или запуск. Адаптив, форма заявки, кнопка в Telegram/WhatsApp.</p><div class="price" data-i="s1p" data-html>от $150 <small>· 3–5 дней</small></div></div>
+      <div class="s"><div class="ic">🏝</div><h3 data-i="s2">Сайт для бизнеса</h3><p data-i="s2d">Кафе, вилла, студия, школа: меню или прайс, галерея, бронь, 2 языка.</p><div class="price" data-i="s2p" data-html>от $300 <small>· 1–2 недели</small></div></div>
+      <div class="s"><div class="ic">📱</div><h3 data-i="s3">Telegram Mini App</h3><p data-i="s3d">Приложение внутри Telegram: меню с заказом, запись, карта лояльности, колесо скидок.</p><div class="price" data-i="s3p" data-html>от $250 <small>· 1–2 недели</small></div></div>
+      <div class="s"><div class="ic">🎮</div><h3 data-i="s4">Брендированная игра</h3><p data-i="s4d">Мини-игра с вашим логотипом и призами — вирусная механика для соцсетей и Telegram.</p><div class="price" data-i="s4p" data-html>от $350 <small>· 2–3 недели</small></div></div>
+    </div>
+  </section>
+
+  <section>
+    <h2 data-i="p_h">Как работаем</h2>
+    <p class="sub" data-i="p_sub">Прозрачно и без лишней бюрократии.</p>
+    <div class="steps">
+      <div class="step"><h3 data-i="p1">Бриф</h3><p data-i="p1d">Пишете в Telegram, обсуждаем задачу, сроки и бюджет.</p></div>
+      <div class="step"><h3 data-i="p2">Дизайн</h3><p data-i="p2d">Показываю первый вариант за 2–3 дня, правим вместе.</p></div>
+      <div class="step"><h3 data-i="p3">Запуск</h3><p data-i="p3d">Публикую сайт или приложение, подключаю домен и бота.</p></div>
+      <div class="step"><h3 data-i="p4">Поддержка</h3><p data-i="p4d">Две недели бесплатных мелких правок после запуска.</p></div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="cta">
+      <h2 data-i="c_h">Есть идея или проект?</h2>
+      <p data-i="c_p">Напишите пару слов о задаче — отвечу в течение дня и предложу решение под ваш бюджет.</p>
+      <a class="btn btn-main" href="https://t.me/aanisimo_va" target="_blank" rel="noopener">Telegram · @aanisimo_va</a>
+    </div>
+  </section>
+
+  <footer>
+    <span>© 2026 Anna Anisimova</span>
+    <span><a href="https://instagram.com/_anisimova_aaa" target="_blank" rel="noopener">Instagram</a> · <a href="https://t.me/aanisimo_va" target="_blank" rel="noopener">Telegram</a></span>
+  </footer>
+</main>
+
+<script>
+const EN={
+ nav1:"Work",nav2:"Services",nav3:"Contact",
+ tag:"🌴 Bali · working remotely worldwide",
+ h1:"Websites & <em>Telegram apps</em> that bring you clients",
+ lead:"I build landing pages, websites and Telegram mini apps for cafés, villas, studios and brands. Fast, beautiful, detail-obsessed.",
+ cta1:"Message me on Telegram →",cta2:"See my work",
+ w_h:"Work",w_sub:"Live demos — open them and try.",
+ k_game:"Telegram Mini App · game",t_kol:"Kolibri — Flappy",
+ d_kol:"A mini game right inside Telegram: tap controls, global leaderboard, custom backend and bot. Can be branded for a café or shop — with prizes for high scores.",
+ c_rating:"Leaderboard",l_tg:"Open in Telegram →",l_web:"In browser",
+ k_land:"Landing page · SaaS",t_puls:"Puls — SMM platform",
+ d_puls:"Sales landing page for an SMM team tool: offer, pricing, FAQ, light & dark theme, mobile-first.",
+ c_adapt:"Responsive",c_theme:"Dark mode",c_tariffs:"Pricing",l_open:"Open site →",
+ s_h:"Services & pricing",s_sub:"Starting prices — I'll give an exact quote after a quick chat.",
+ s1:"Landing page",s1d:"One page for a service, promo or launch. Responsive, lead form, Telegram/WhatsApp button.",s1p:"from $150 <small>· 3–5 days</small>",
+ s2:"Business website",s2d:"Café, villa, studio, school: menu or price list, gallery, booking, 2 languages.",s2p:"from $300 <small>· 1–2 weeks</small>",
+ s3:"Telegram Mini App",s3d:"An app inside Telegram: menu with ordering, booking, loyalty card, discount wheel.",s3p:"from $250 <small>· 1–2 weeks</small>",
+ s4:"Branded game",s4d:"A mini game with your logo and prizes — viral mechanics for social media and Telegram.",s4p:"from $350 <small>· 2–3 weeks</small>",
+ p_h:"How we work",p_sub:"Transparent and simple.",
+ p1:"Brief",p1d:"Message me on Telegram, we discuss the task, timeline and budget.",
+ p2:"Design",p2d:"First version in 2–3 days, we refine it together.",
+ p3:"Launch",p3d:"I publish the site or app, connect the domain and bot.",
+ p4:"Support",p4d:"Two weeks of free small edits after launch.",
+ c_h:"Have an idea or project?",c_p:"Tell me a few words about it — I'll reply within a day with a solution for your budget."
+};
+const RU={};
+document.querySelectorAll('[data-i]').forEach(e=>RU[e.dataset.i]=e.innerHTML);
+function setLang(l){
+  const d=l==='en'?EN:RU;
+  document.querySelectorAll('[data-i]').forEach(e=>{const v=d[e.dataset.i];if(v!=null)e.innerHTML=v;});
+  document.documentElement.lang=l;
+  document.title=l==='en'?"Anna Anisimova — websites & Telegram mini apps":"Anna Anisimova — сайты и Telegram-приложения";
+  document.querySelectorAll('.lang button').forEach(b=>b.classList.toggle('on',b.dataset.l===l));
+  try{localStorage.setItem('lang',l)}catch(e){}
+}
+document.querySelectorAll('.lang button').forEach(b=>b.onclick=()=>setLang(b.dataset.l));
+let saved=null;try{saved=localStorage.getItem('lang')}catch(e){}
+const q=new URLSearchParams(location.search).get('lang');
+setLang(q||saved||((navigator.language||'').startsWith('ru')?'ru':'en'));
+</script>
+</body>
+</html>

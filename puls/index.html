@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Пульс — SMM-платформа</title>
+<meta name="description" content="Пульс — платформа для SMM-команд: контент-план, автопостинг в 7 соцсетей и аналитика в одном окне. Запуск 1 сентября.">
+<style>
+  :root{
+    --bg:#f7f7fb;
+    --surface:#ffffff;
+    --surface-2:#f0f0f7;
+    --text:#12121a;
+    --muted:#5c5c72;
+    --border:#e3e3ee;
+    --accent:#5b3df5;
+    --accent-2:#ff4d8d;
+    --accent-soft:#ece8ff;
+    --shadow:0 1px 2px rgba(18,18,26,.06), 0 12px 32px rgba(18,18,26,.07);
+    --radius:18px;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0b0b12;
+      --surface:#14141f;
+      --surface-2:#1c1c2b;
+      --text:#f2f2f7;
+      --muted:#a1a1b8;
+      --border:#28283a;
+      --accent:#8b74ff;
+      --accent-2:#ff6ea1;
+      --accent-soft:#221c45;
+      --shadow:0 1px 2px rgba(0,0,0,.4), 0 16px 40px rgba(0,0,0,.45);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0b0b12;
+    --surface:#14141f;
+    --surface-2:#1c1c2b;
+    --text:#f2f2f7;
+    --muted:#a1a1b8;
+    --border:#28283a;
+    --accent:#8b74ff;
+    --accent-2:#ff6ea1;
+    --accent-soft:#221c45;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 16px 40px rgba(0,0,0,.45);
+  }
+
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Inter",Roboto,Helvetica,Arial,sans-serif;
+    font-size:17px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  img{max-width:100%}
+  a{color:inherit}
+  .wrap{width:min(1120px,100% - 40px);margin-inline:auto}
+
+  /* ---------- header ---------- */
+  header{
+    position:sticky;top:0;z-index:50;
+    backdrop-filter:blur(14px);
+    background:color-mix(in srgb, var(--bg) 82%, transparent);
+    border-bottom:1px solid var(--border);
+  }
+  .nav{display:flex;align-items:center;gap:28px;height:68px}
+  .logo{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:-.02em;font-size:19px;text-decoration:none}
+  .logo-mark{
+    width:30px;height:30px;border-radius:9px;flex:none;
+    background:linear-gradient(135deg,var(--accent),var(--accent-2));
+    display:grid;place-items:center;color:#fff;font-size:15px;
+  }
+  .nav-links{display:flex;gap:26px;margin-left:auto;font-size:15px}
+  .nav-links a{color:var(--muted);text-decoration:none;transition:color .15s}
+  .nav-links a:hover{color:var(--text)}
+  @media (max-width:860px){.nav-links{display:none}}
+
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    padding:12px 22px;border-radius:12px;border:1px solid transparent;
+    font-size:15px;font-weight:600;text-decoration:none;cursor:pointer;
+    font-family:inherit;transition:transform .12s ease, filter .15s ease, background .15s;
+  }
+  .btn:active{transform:translateY(1px)}
+  .btn-primary{background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#fff}
+  .btn-primary:hover{filter:brightness(1.08)}
+  .btn-ghost{background:var(--surface);border-color:var(--border);color:var(--text)}
+  .btn-ghost:hover{background:var(--surface-2)}
+  .nav .btn{margin-left:auto;padding:10px 18px}
+  .nav-links ~ .btn{margin-left:0}
+
+  /* ---------- hero ---------- */
+  .hero{position:relative;overflow:hidden;padding:86px 0 72px}
+  .glow{
+    position:absolute;inset:auto;pointer-events:none;border-radius:50%;
+    filter:blur(90px);opacity:.5;
+  }
+  .glow-a{width:520px;height:520px;background:var(--accent);top:-220px;left:-120px}
+  .glow-b{width:460px;height:460px;background:var(--accent-2);top:-160px;right:-140px;opacity:.35}
+  .hero-inner{position:relative;display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center}
+  @media (max-width:940px){.hero-inner{grid-template-columns:1fr;gap:44px}.hero{padding:56px 0 48px}}
+
+  .badge{
+    display:inline-flex;align-items:center;gap:9px;
+    padding:7px 14px 7px 9px;border-radius:100px;
+    background:var(--accent-soft);color:var(--accent);
+    border:1px solid color-mix(in srgb, var(--accent) 25%, transparent);
+    font-size:13.5px;font-weight:600;
+  }
+  .dot{width:7px;height:7px;border-radius:50%;background:var(--accent-2);box-shadow:0 0 0 4px color-mix(in srgb,var(--accent-2) 22%,transparent)}
+  h1{
+    font-size:clamp(38px,5.4vw,62px);line-height:1.05;letter-spacing:-.035em;
+    margin:22px 0 18px;font-weight:800;
+  }
+  h1 .grad{background:linear-gradient(120deg,var(--accent),var(--accent-2));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .lead{font-size:19px;color:var(--muted);margin:0 0 30px;max-width:52ch}
+  .cta-row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+  .cta-note{font-size:14px;color:var(--muted);margin-top:16px}
+
+  /* dashboard mock */
+  .mock{
+    background:var(--surface);border:1px solid var(--border);border-radius:22px;
+    box-shadow:var(--shadow);overflow:hidden;
+  }
+  .mock-bar{display:flex;align-items:center;gap:7px;padding:14px 16px;border-bottom:1px solid var(--border);background:var(--surface-2)}
+  .mock-bar i{width:10px;height:10px;border-radius:50%;background:var(--border)}
+  .mock-bar span{margin-left:8px;font-size:13px;color:var(--muted)}
+  .mock-body{padding:20px}
+  .stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px}
+  .stat{background:var(--surface-2);border:1px solid var(--border);border-radius:13px;padding:13px 14px}
+  .stat b{display:block;font-size:22px;letter-spacing:-.02em;line-height:1.2}
+  .stat small{color:var(--muted);font-size:12.5px}
+  .stat em{font-style:normal;color:#14b877;font-size:12.5px;font-weight:600}
+  .chart{display:flex;align-items:flex-end;gap:8px;height:120px;padding:12px;background:var(--surface-2);border:1px solid var(--border);border-radius:13px}
+  .chart div{flex:1;border-radius:6px 6px 3px 3px;background:linear-gradient(180deg,var(--accent),color-mix(in srgb,var(--accent-2) 70%,transparent));animation:grow .9s cubic-bezier(.2,.8,.3,1) backwards}
+  @keyframes grow{from{height:4px!important;opacity:.2}}
+  .queue{margin-top:14px;display:flex;flex-direction:column;gap:9px}
+  .q{display:flex;align-items:center;gap:11px;padding:10px 12px;border:1px solid var(--border);border-radius:11px;font-size:14px}
+  .q i{width:26px;height:26px;border-radius:8px;flex:none;display:grid;place-items:center;font-size:13px;font-style:normal;background:var(--accent-soft);color:var(--accent)}
+  .q span{margin-left:auto;font-size:12.5px;color:var(--muted);white-space:nowrap}
+
+  /* ---------- logos ---------- */
+  .logos{padding:34px 0;border-block:1px solid var(--border);background:var(--surface)}
+  .logos p{text-align:center;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 18px}
+  .logos ul{list-style:none;display:flex;flex-wrap:wrap;justify-content:center;gap:14px 40px;margin:0;padding:0;font-weight:700;font-size:18px;color:var(--muted);opacity:.75;letter-spacing:-.02em}
+
+  /* ---------- sections ---------- */
+  section{padding:88px 0}
+  @media (max-width:940px){section{padding:60px 0}}
+  .sec-head{max-width:660px;margin:0 auto 48px;text-align:center}
+  .kicker{font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin:0 0 12px}
+  h2{font-size:clamp(28px,3.6vw,42px);line-height:1.15;letter-spacing:-.03em;margin:0 0 14px;font-weight:800}
+  .sec-head p{color:var(--muted);margin:0;font-size:18px}
+
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  @media (max-width:940px){.grid{grid-template-columns:1fr 1fr}}
+  @media (max-width:620px){.grid{grid-template-columns:1fr}}
+  .card{
+    background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+    padding:26px;transition:transform .18s ease, box-shadow .18s ease, border-color .18s;
+  }
+  .card:hover{transform:translateY(-3px);box-shadow:var(--shadow);border-color:color-mix(in srgb,var(--accent) 35%,var(--border))}
+  .card .ico{
+    width:44px;height:44px;border-radius:12px;display:grid;place-items:center;font-size:21px;
+    background:var(--accent-soft);margin-bottom:16px;
+  }
+  .card h3{margin:0 0 8px;font-size:19px;letter-spacing:-.01em}
+  .card p{margin:0;color:var(--muted);font-size:15.5px}
+
+  /* steps */
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;counter-reset:s}
+  @media (max-width:820px){.steps{grid-template-columns:1fr}}
+  .step{position:relative;padding-top:14px}
+  .step::before{
+    counter-increment:s;content:counter(s);
+    display:grid;place-items:center;width:40px;height:40px;border-radius:12px;
+    background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#fff;
+    font-weight:700;margin-bottom:16px;
+  }
+  .step h3{margin:0 0 8px;font-size:19px}
+  .step p{margin:0;color:var(--muted);font-size:15.5px}
+
+  /* pricing */
+  .pricing{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:start}
+  @media (max-width:940px){.pricing{grid-template-columns:1fr;max-width:460px;margin-inline:auto}}
+  .plan{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:28px;position:relative}
+  .plan.pop{border-color:var(--accent);box-shadow:var(--shadow)}
+  .plan .tag{position:absolute;top:-13px;left:28px;background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#fff;font-size:12px;font-weight:700;padding:5px 12px;border-radius:100px}
+  .plan h3{margin:0 0 6px;font-size:18px}
+  .plan .who{color:var(--muted);font-size:14.5px;margin:0 0 20px}
+  .price{display:flex;align-items:baseline;gap:6px;margin-bottom:4px}
+  .price b{font-size:40px;letter-spacing:-.03em;font-weight:800}
+  .price span{color:var(--muted);font-size:15px}
+  .old{color:var(--muted);text-decoration:line-through;font-size:14px;margin-bottom:22px}
+  .plan ul{list-style:none;margin:0 0 26px;padding:0;display:flex;flex-direction:column;gap:11px;font-size:15px}
+  .plan li{display:flex;gap:10px;align-items:flex-start;color:var(--muted)}
+  .plan li::before{content:"✓";color:var(--accent);font-weight:800;flex:none}
+  .plan .btn{width:100%}
+
+  /* quotes */
+  .quotes{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  @media (max-width:940px){.quotes{grid-template-columns:1fr}}
+  blockquote{margin:0;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:26px}
+  blockquote p{margin:0 0 20px;font-size:16px}
+  .who-row{display:flex;align-items:center;gap:12px}
+  .ava{width:40px;height:40px;border-radius:50%;flex:none;display:grid;place-items:center;font-weight:700;color:#fff;font-size:15px;background:linear-gradient(135deg,var(--accent),var(--accent-2))}
+  .who-row b{display:block;font-size:14.5px}
+  .who-row small{color:var(--muted);font-size:13px}
+
+  /* faq */
+  .faq{max-width:760px;margin-inline:auto}
+  details{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:0 20px;margin-bottom:10px}
+  summary{cursor:pointer;list-style:none;padding:18px 0;font-weight:600;display:flex;align-items:center;gap:14px;font-size:16.5px}
+  summary::-webkit-details-marker{display:none}
+  summary::after{content:"+";margin-left:auto;color:var(--accent);font-size:22px;font-weight:400;transition:transform .2s}
+  details[open] summary::after{transform:rotate(45deg)}
+  details p{margin:0 0 18px;color:var(--muted);font-size:15.5px}
+
+  /* cta */
+  .cta{
+    position:relative;overflow:hidden;border-radius:26px;padding:60px 40px;text-align:center;
+    background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#fff;
+  }
+  .cta h2{margin-bottom:12px}
+  .cta p{margin:0 auto 28px;max-width:48ch;opacity:.92;font-size:18px}
+  form{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;max-width:520px;margin-inline:auto}
+  input[type=email]{
+    flex:1 1 260px;padding:14px 18px;border-radius:12px;border:1px solid rgba(255,255,255,.35);
+    background:rgba(255,255,255,.14);color:#fff;font-size:16px;font-family:inherit;
+  }
+  input[type=email]::placeholder{color:rgba(255,255,255,.75)}
+  input[type=email]:focus{outline:2px solid rgba(255,255,255,.7);outline-offset:1px}
+  form .btn{background:#fff;color:var(--accent);flex:0 0 auto}
+  .cta small{display:block;margin-top:16px;opacity:.85;font-size:13.5px}
+  .ok{margin-top:18px;font-weight:600}
+
+  footer{border-top:1px solid var(--border);padding:34px 0;margin-top:20px}
+  .foot{display:flex;flex-wrap:wrap;gap:18px;align-items:center;color:var(--muted);font-size:14.5px}
+  .foot nav{display:flex;gap:22px;margin-left:auto;flex-wrap:wrap}
+  .foot a{text-decoration:none}
+  .foot a:hover{color:var(--text)}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="logo" href="#"><span class="logo-mark">◈</span> Пульс</a>
+    <nav class="nav-links">
+      <a href="#features">Возможности</a>
+      <a href="#how">Как работает</a>
+      <a href="#pricing">Тарифы</a>
+      <a href="#faq">Вопросы</a>
+    </nav>
+    <a class="btn btn-primary" href="#signup">В список ожидания</a>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="glow glow-a"></div>
+  <div class="glow glow-b"></div>
+  <div class="wrap hero-inner">
+    <div>
+      <span class="badge"><span class="dot"></span> Запуск 1 сентября — ранний доступ открыт</span>
+      <h1>Весь SMM<br>в <span class="grad">одном окне</span></h1>
+      <p class="lead">Контент-план, автопостинг в 7 площадок и понятная аналитика. Без десяти вкладок, таблиц и напоминаний в 23:50.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="#signup">Забрать ранний доступ</a>
+        <a class="btn btn-ghost" href="#how">Как это работает</a>
+      </div>
+      <p class="cta-note">14 дней бесплатно · Без карты · Уже 2 480 в списке ожидания</p>
+    </div>
+
+    <div class="mock" aria-hidden="true">
+      <div class="mock-bar"><i></i><i></i><i></i><span>Пульс — Дашборд</span></div>
+      <div class="mock-body">
+        <div class="stat-row">
+          <div class="stat"><small>Охват за 30 дней</small><b>412K</b><em>↑ 34%</em></div>
+          <div class="stat"><small>Вовлечённость</small><b>7,8%</b><em>↑ 1,2 п.п.</em></div>
+          <div class="stat"><small>Постов в очереди</small><b>26</b><em>на 3 недели</em></div>
+        </div>
+        <div class="chart">
+          <div style="height:38%;animation-delay:.05s"></div>
+          <div style="height:52%;animation-delay:.1s"></div>
+          <div style="height:44%;animation-delay:.15s"></div>
+          <div style="height:68%;animation-delay:.2s"></div>
+          <div style="height:58%;animation-delay:.25s"></div>
+          <div style="height:82%;animation-delay:.3s"></div>
+          <div style="height:71%;animation-delay:.35s"></div>
+          <div style="height:95%;animation-delay:.4s"></div>
+        </div>
+        <div class="queue">
+          <div class="q"><i>TG</i> Кейс клиента: рост охватов ×3 <span>сегодня, 12:00</span></div>
+          <div class="q"><i>VK</i> Розыгрыш подписки на месяц <span>завтра, 18:30</span></div>
+          <div class="q"><i>YT</i> Shorts: 5 ошибок в контент-плане <span>чт, 10:00</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="logos">
+  <div class="wrap">
+    <p>Публикуем в один клик</p>
+    <ul>
+      <li>Telegram</li><li>VK</li><li>Instagram</li><li>YouTube</li><li>TikTok</li><li>Дзен</li><li>Odnoklassniki</li>
+    </ul>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<section id="features">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="kicker">Возможности</p>
+      <h2>Меньше рутины — больше контента</h2>
+      <p>Шесть инструментов, которые заменяют таблицы, чаты и ручные выгрузки.</p>
+    </div>
+    <div class="grid">
+      <article class="card">
+        <div class="ico">🗓</div>
+        <h3>Контент-календарь</h3>
+        <p>Все площадки на одной сетке. Перетащил пост — время публикации обновилось везде.</p>
+      </article>
+      <article class="card">
+        <div class="ico">🚀</div>
+        <h3>Автопостинг</h3>
+        <p>Один текст — семь адаптаций под форматы площадок. Публикация по расписанию, даже пока вы спите.</p>
+      </article>
+      <article class="card">
+        <div class="ico">📊</div>
+        <h3>Аналитика без выгрузок</h3>
+        <p>Охваты, ER и рост подписчиков в одном отчёте. Сравнение периодов и площадок в два клика.</p>
+      </article>
+      <article class="card">
+        <div class="ico">✨</div>
+        <h3>ИИ-помощник</h3>
+        <p>Идеи для рубрик, черновики постов и заголовков в вашем tone of voice. Правки — прямо в редакторе.</p>
+      </article>
+      <article class="card">
+        <div class="ico">👥</div>
+        <h3>Согласования</h3>
+        <p>Клиент видит превью поста и оставляет комментарии. Никаких скриншотов в мессенджерах.</p>
+      </article>
+      <article class="card">
+        <div class="ico">💬</div>
+        <h3>Единый инбокс</h3>
+        <p>Комментарии и личные сообщения со всех площадок в одной ленте. Ответ — не выходя из вкладки.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- HOW -->
+<section id="how" style="background:var(--surface);border-block:1px solid var(--border)">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="kicker">Как работает</p>
+      <h2>Первый пост — за 10 минут</h2>
+      <p>Ничего не нужно устанавливать: всё работает в браузере.</p>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <h3>Подключите аккаунты</h3>
+        <p>Авторизация по официальным API — пароли не хранятся и не передаются.</p>
+      </div>
+      <div class="step">
+        <h3>Соберите контент-план</h3>
+        <p>Возьмите готовый шаблон рубрикатора или импортируйте свою таблицу.</p>
+      </div>
+      <div class="step">
+        <h3>Смотрите результат</h3>
+        <p>Посты выходят по расписанию, а отчёт собирается сам — к утру понедельника.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="kicker">Тарифы</p>
+      <h2>Цены запуска</h2>
+      <p>Для первых 500 пользователей цена фиксируется навсегда.</p>
+    </div>
+    <div class="pricing">
+      <div class="plan">
+        <h3>Соло</h3>
+        <p class="who">Для SMM-специалиста с 1–2 проектами</p>
+        <div class="price"><b>990 ₽</b><span>/ мес</span></div>
+        <p class="old">1 490 ₽ после запуска</p>
+        <ul>
+          <li>3 площадки</li>
+          <li>60 постов в месяц</li>
+          <li>Календарь и автопостинг</li>
+          <li>Базовая аналитика</li>
+        </ul>
+        <a class="btn btn-ghost" href="#signup">Выбрать</a>
+      </div>
+
+      <div class="plan pop">
+        <span class="tag">Популярный</span>
+        <h3>Команда</h3>
+        <p class="who">Для агентств и продуктовых команд</p>
+        <div class="price"><b>2 900 ₽</b><span>/ мес</span></div>
+        <p class="old">4 900 ₽ после запуска</p>
+        <ul>
+          <li>Все площадки, без лимита постов</li>
+          <li>До 10 участников</li>
+          <li>Согласования с клиентом</li>
+          <li>ИИ-помощник и единый инбокс</li>
+          <li>Отчёты в PDF под брендом</li>
+        </ul>
+        <a class="btn btn-primary" href="#signup">Выбрать</a>
+      </div>
+
+      <div class="plan">
+        <h3>Бизнес</h3>
+        <p class="who">Для крупных брендов и сетей</p>
+        <div class="price"><b>Договорная</b></div>
+        <p class="old">&nbsp;</p>
+        <ul>
+          <li>Безлимит участников и брендов</li>
+          <li>Роли и права доступа</li>
+          <li>API и интеграции с CRM</li>
+          <li>Персональный менеджер</li>
+          <li>SLA 99,9%</li>
+        </ul>
+        <a class="btn btn-ghost" href="#signup">Обсудить</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUOTES -->
+<section style="background:var(--surface);border-block:1px solid var(--border)">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="kicker">Бета-тест</p>
+      <h2>Что говорят первые команды</h2>
+      <p>40 агентств тестировали Пульс три месяца до запуска.</p>
+    </div>
+    <div class="quotes">
+      <blockquote>
+        <p>«Сэкономили примерно день в неделю на согласованиях. Клиенты наконец перестали присылать правки голосовыми.»</p>
+        <div class="who-row"><div class="ava">МК</div><div><b>Марина Ковалёва</b><small>Head of SMM, агентство «Крылья»</small></div></div>
+      </blockquote>
+      <blockquote>
+        <p>«Веду восемь проектов одна. Раньше был ад из таблиц и будильников — теперь всё в календаре, и он сам публикует.»</p>
+        <div class="who-row"><div class="ava">АД</div><div><b>Алина Дорохова</b><small>SMM-специалист, фриланс</small></div></div>
+      </blockquote>
+      <blockquote>
+        <p>«Отчёт для руководства собирается сам. За квартал охваты выросли на 41% — просто потому, что стали выходить регулярно.»</p>
+        <div class="who-row"><div class="ava">ИС</div><div><b>Игорь Соколов</b><small>Маркетинг-директор, сеть «Тёплый дом»</small></div></div>
+      </blockquote>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="kicker">Вопросы</p>
+      <h2>Частые вопросы</h2>
+    </div>
+    <div class="faq">
+      <details open>
+        <summary>Когда будет доступ?</summary>
+        <p>Публичный запуск — 1 сентября. Участники списка ожидания получают приглашение на две недели раньше и цену запуска навсегда.</p>
+      </details>
+      <details>
+        <summary>Безопасно ли подключать аккаунты?</summary>
+        <p>Подключение идёт по официальным API площадок через OAuth. Мы не запрашиваем и не храним пароли, а доступ можно отозвать в один клик.</p>
+      </details>
+      <details>
+        <summary>Что если площадка ограничит автопостинг?</summary>
+        <p>Для площадок без публичного API публикация работает в режиме напоминания: пост готов, вам приходит уведомление и остаётся нажать «Опубликовать».</p>
+      </details>
+      <details>
+        <summary>Можно перенести данные из таблиц?</summary>
+        <p>Да. Импорт из Google Sheets и Excel: контент-план подтянется вместе с датами, текстами и вложениями.</p>
+      </details>
+      <details>
+        <summary>Есть ли бесплатный период?</summary>
+        <p>14 дней на любом тарифе, карта не нужна. После окончания данные сохраняются 90 дней.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- SIGNUP -->
+<section id="signup" style="padding-top:0">
+  <div class="wrap">
+    <div class="cta">
+      <h2>Заберите ранний доступ</h2>
+      <p>Приглашение за две недели до запуска и цена 990 ₽ — навсегда. Осталось 137 мест из 500.</p>
+      <form id="waitlist" novalidate>
+        <input type="email" name="email" placeholder="you@company.ru" aria-label="Электронная почта" required>
+        <button class="btn" type="submit">Записаться</button>
+      </form>
+      <div class="ok" id="ok" hidden>Готово! Письмо с подтверждением уже летит к вам.</div>
+      <small>Пишем только по делу: 1–2 письма о запуске. Отписаться можно в один клик.</small>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot">
+    <a class="logo" href="#"><span class="logo-mark">◈</span> Пульс</a>
+    <span>© 2026</span>
+    <nav>
+      <a href="#features">Возможности</a>
+      <a href="#pricing">Тарифы</a>
+      <a href="#faq">Вопросы</a>
+      <a href="mailto:hi@puls.ru">hi@puls.ru</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+  const form = document.getElementById('waitlist');
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    const field = form.email;
+    if (!field.value.includes('@') || field.value.length < 5) {
+      field.focus();
+      field.style.outline = '2px solid #fff';
+      return;
+    }
+    form.hidden = true;
+    document.getElementById('ok').hidden = false;
+  });
+</script>
+
+</body>
+</html>
